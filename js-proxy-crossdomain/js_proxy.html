@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<title>JS Proxy</title>
+</head>
+<body>
+<script type="text/javascript">
+	function getQueryVariable(variable) {
+		var query = window.location.search.substring(1);
+		var vars = query.split("&");
+		for (var i=0,n = vars.length;i<n;i++) {
+			var pair = vars[i].split("=");
+			if (pair[0] == variable) {
+				return pair[1];
+			}
+		}
+		return '';
+	}
+
+	var callback = decodeURIComponent(getQueryVariable('callback'));
+	var data = decodeURIComponent(getQueryVariable('data'));
+	
+	if(callback === ''){
+		callback = 'callback';
+	}
+	
+	try{
+		eval('var cbData = ' + data);
+		parent.parent[callback]( cbData );
+	}catch(e){
+		alert('something error, please contact us. \n error code:1337604438580')
+	}
+	
+	
+</script>
+        
+</body>
+</html>

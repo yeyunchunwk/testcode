@@ -1,0 +1,87 @@
+<!DOCTYPE html >
+<html>
+	<head>
+		<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+		<title>test</title>
+	</head>
+
+	<body>
+		<script>
+			function JSProxyCallback( cData ){
+				var api = cData.api || 'http://dev.alibaba.com/js_proxy.html';
+				var callback = cData.callback || 'callback';
+				var data = cData.data || '0';
+				
+				var url = api + '?callback=' + callback + '&data=' + data;
+			
+				var _ifr = document.createElement('iframe');
+				_ifr.id = 'ifr' + (new Date).getTime();
+				_ifr.style.display = 'none';
+				_ifr.src = url;
+				document.body.appendChild(_ifr);
+			}
+			
+			function queryString() {
+				var Url = window.location.href;
+				var u,
+				g,
+				StrBack = '';
+				if (arguments[arguments.length - 1] == "#") {
+					u = Url.split("#");
+				} else {
+					u = Url.split("?");
+				}
+				if (u.length == 1) {
+					g = '';
+				} else {
+					g = u[1];
+				}
+				if (g != '') {
+					gg = g.split("&");
+					var MaxI = gg.length;
+					str = arguments[0] + "=";
+					for (i = 0; i < MaxI; i++) {
+						if (gg[i].indexOf(str) == 0) {
+							StrBack = gg[i].replace(str, "");
+							break;
+						}
+					}
+				}
+				return StrBack;
+			}
+			
+			function callBackSelectedImages( files ){
+				if(queryString('JSProxyCallBack') === 'true'){
+					var callbackStr = queryString('callback');			
+					if (callbackStr == '') {
+						callbackStr = 'callBackSelectImage';
+					}
+					
+					var api = decodeURIComponent( queryString('JSProxyUrl') );
+				
+					var callbackPara = {
+						"api":api,
+						'callback':callbackStr,
+						"data":files
+					};
+					
+					JSProxyCallback(callbackPara);
+					return true;
+				}
+
+				if(queryString('imageType') != 'editor'){
+					addImage( files );
+				}else{
+					insertPhoto( files );
+				}
+			}
+			
+			
+			callBackSelectedImages('{"a":"b"}');
+			
+		</script>
+	
+		
+	</body>
+		
+</html>
