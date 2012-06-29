@@ -1,0 +1,21 @@
+<!DOCTYPE html >
+<html>
+	<head>
+		<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+		<title>Form Reset</title>
+	</head>
+
+	<body>
+		<p>
+			当form中仅存在一个input的时候，在输入框中按回车会提交form <br />
+			当form中存在两个input的时候，在输入框中按回车不会会提交form <br />
+			当form中仅存在一个input[type=submit]的时候，在输入框中按回车会提交form <br />
+		</p>
+		<form id="ftest" action="http://www.alibaba.com">
+			input1:<input type="text" value="" />
+			input2:<input type="text" value="" />
+			submit:<input type="submit" value="submit" />
+		</form>
+	</body>
+		
+</html>
