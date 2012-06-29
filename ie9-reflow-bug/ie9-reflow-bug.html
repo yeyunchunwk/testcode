@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<title>test</title>
+
+<style>
+.tabs{}
+.tabs ul{border:1px solid red;height:100px;}
+.tabs li{float:left;margin:0 4px 0 0;border:1px solid #c1cee0;list-style-type:none;}
+.tabs li a{display:block;padding:0 12px;}
+</style>
+</head>
+<body>
+<p>一个诡异的BUG，在IE9浏览器中，在一个需要计算相邻元素的宽度的时候，同时赋值会造成错位。解决方案（使其重绘一次）虽然很丑陋，但这是浏览器本身的BUG，不必为其负责。</p>
+
+<div class="tabs">
+	<ul id="test">
+		<li id="allTab">
+			<a href="#">文字 <span id="test01">0</span></a>
+		</li>
+		<li id="draftTab">
+			<a href="#">文字 <span id="test02">0</span></a>
+		</li>
+	</ul>
+</div>
+
+
+<script>
+var setValue = function(obj){
+	document.getElementById('test01').innerHTML = '100';
+	document.getElementById('test02').innerHTML = '2000';
+	
+	// fix
+	// document.getElementById('test').style.visibility = 'hidden';
+	// document.getElementById('test').style.visibility = 'visible';
+}
+
+
+window.onload = function(){
+	window.setTimeout(setValue, 100);
+}
+
+
+</script>
+
+
+</body>
+</html>
